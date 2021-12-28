@@ -11329,3 +11329,11 @@ textarea.form-control-lg {
     width: 80%;
 }
 
+.marginForm {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.btn-block {
+  width: 100%;
+}
