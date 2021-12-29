@@ -20,6 +20,8 @@ export class RegionComponent implements OnInit {
   });
   post_region = false;
   submitted = false;
+  button_text = "";
+  isDisabled = false;
 
   constructor(
     private region_service: RegionService,
@@ -52,11 +54,13 @@ export class RegionComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
+    this.isDisabled = true;
 
     if (this.post_region) {
       this.region_service.createRegion(this.formulario.value).subscribe(
         res => {
-          console.log(this.region);
+          console.log(res);
+          this.isDisabled = false;
           this.getRegions();
           this.closeModal();
         },
@@ -65,7 +69,8 @@ export class RegionComponent implements OnInit {
     } else {
       this.region_service.updateRegion(this.formulario.value).subscribe(
         res => {
-          console.log(this.region);
+          console.log(res);
+          this.isDisabled = false;
           this.getRegions();
           this.closeModal();
         },
@@ -75,12 +80,14 @@ export class RegionComponent implements OnInit {
   }
 
   createRegion() {
+    this.button_text = "Registrar"
     this.post_region = true;
     this.formulario.reset();
     $("#region_modal").modal("show");
   }
 
   updateRegion(region: Region) {
+    this.button_text = "Actualizar"
     this.post_region = false;
     this.formulario.controls['id_region'].setValue(region.id_region);
     this.formulario.controls['region'].setValue(region.region);
@@ -90,7 +97,7 @@ export class RegionComponent implements OnInit {
   deleteRegion(id_region: number) {
     this.region_service.deleteRegion(id_region).subscribe(
       res => {
-        console.log(this.region);
+        console.log(res);
         this.getRegions();
       },
       err => console.log(err)
@@ -104,6 +111,10 @@ export class RegionComponent implements OnInit {
   closeModal() {
     $("#region_modal").modal("hide");
     this.submitted = false;
+  }
+
+  reloadTable() {
+    this.getRegions();
   }
 
 }
