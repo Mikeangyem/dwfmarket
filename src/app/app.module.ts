@@ -10,6 +10,7 @@ import { LayoutModule } from './modules/layout/layout.module';
 import { ExchangeRateModule } from './modules/exchange-rate/exchange-rate.module';
 import { CustomerModule } from './modules/customer/customer.module';
 import { HomeModule } from './modules/home/home.module';
+import { ProductModule } from './modules/product/product.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HomeModule } from './modules/home/home.module';
     LayoutModule,
     ExchangeRateModule,
     CustomerModule,
-    HomeModule
+    HomeModule,
+    ProductModule
   ],
   providers: [],
   bootstrap: [AppComponent]
