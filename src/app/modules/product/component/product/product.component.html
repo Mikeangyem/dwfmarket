@@ -1,0 +1,139 @@
+<div class="container-fluid">
+  
+    <div class="card-header">
+      	<h3>
+      		<i class="bi bi-gift"></i> &nbsp;Productos
+      		<button (click)="createProduct()" style="float: right" type="button" class="btn btn-success btn-sm">
+      			Agregar Producto
+      			<i class="bi bi-plus-lg"></i>
+      		</button>
+      	</h3>
+    </div>
+
+    <div class="card-body">
+    	<div class="table-responsive">
+    		<table class="table">
+    			<thead class="thead-light">
+    				<tr>
+    					<th class="text-center">GTIN</th>
+    					<th class="text-center">Producto</th>
+    				</tr>
+    			</thead>
+    			<tbody>
+    				<tr *ngFor="let product of products">
+    					<td class="text-center">{{ product.gtin }}</td>
+    					<td class="text-center">{{ product.product }}</td>
+    					<td>
+	    					<button (click)="productDetail(product.gtin)" type="button" class="btn btn-secondary btn-sm">
+	    						Detalles
+	    						<i class="bi bi-info-square"></i>
+	    					</button>
+	    					&nbsp;&nbsp;
+	    					<button (click)="deleteProduct(product.id_product)" type="button" class="btn btn-danger btn-sm">
+	    						Eliminar
+	    						<i class="bi bi-trash"></i>
+	    					</button>
+	    				</td>
+    				</tr>
+    			</tbody>
+    		</table>
+    	</div>
+    </div>
+
+    <div class="card-footer text-muted">
+		<button (click)="reloadTable()" style="float: right" type="button" class="btn btn-info btn-sm">
+      		<i class="bi bi-arrow-repeat"></i>
+      	</button>
+      	<br>
+      	<br>
+    </div>
+</div>
+
+<div class="modal" tabindex="-1" id="product_modal">
+  	<div class="modal-dialog">
+	    <div class="modal-content">
+
+    		<div class="modal-header">
+        		<h5 class="modal-title">Producto</h5>
+        		<button (click)="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      		</div>
+
+      		<div class="modal-body">
+        		<form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+        			<div class="form-group">
+        				<label for="rate">Ingresa el código GTIN<span class="text-danger">*</span></label>
+        				<input type="text" class="form-control marginForm" id="gtin" formControlName="gtin" placeholder="GTIN...">
+        				<div *ngIf="submitted && f['gtin'].errors">
+        					<div *ngIf="f['gtin'].errors['required']">
+        						<span class="text-danger">
+        							El GTIN del producto es obligatorio
+        						</span>
+        					</div>
+        				</div>
+        			</div>
+        			<div class="form-group">
+        				<label for="rate">Ingresa el nombre del Producto<span class="text-danger">*</span></label>
+        				<input type="text" class="form-control marginForm" id="product" formControlName="product" placeholder="Producto...">
+        				<div *ngIf="submitted && f['producto'].errors">
+        					<div *ngIf="f['producto'].errors['required']">
+        						<span class="text-danger">
+        							El nombre del producto es obligatorio.
+        						</span>
+        					</div>
+        				</div>
+        			</div>
+        			<div class="form-group">
+        				<label for="rate">Ingresa el precio<span class="text-danger">*</span></label>
+        				<textarea rows="2" type="text" class="form-control marginForm" id="description" formControlName="description" placeholder="Descripción..."></textarea>
+        			</div>
+        			<div class="form-group">
+        				<label for="rate">Ingresa el precio<span class="text-danger">*</span></label>
+        				<input type="text" class="form-control marginForm" id="price" formControlName="price" placeholder="$ Precio...">
+        				<div *ngIf="submitted && f['price'].errors">
+        					<div *ngIf="f['price'].errors['required']">
+        						<span class="text-danger">
+        							El precio del producto es obligatorio.
+        						</span>
+        					</div>
+        				</div>
+        			</div>
+        			<div class="form-group">
+        				<label for="rate">Ingresa la cantidad de artículos en stock<span class="text-danger">*</span></label>
+        				<input type="text" class="form-control marginForm" id="stock" formControlName="stock" placeholder="Stock...">
+        				<div *ngIf="submitted && f['stock'].errors">
+        					<div *ngIf="f['stock'].errors['required']">
+        						<span class="text-danger">
+        							La cantidad de artículos en stock del producto es obligatorio.
+        						</span>
+        					</div>
+        				</div>
+        			</div>
+        			<div class="form-group">
+        				<label for="rate">Selecciona la Categoría a la que pertenece el producto<span class="text-danger">*</span></label>
+        				<select class="form-control marginForm" id="id_category" formControlName="id_category">
+        					<option value="0" disabled>Selecciona una Categoría</option>
+        					<option *ngFor="let category of categories" [ngValue]="category.id_category">{{ category.category }}</option>
+        				</select>
+        				<div *ngIf="submitted && f['id_category'].errors">
+        					<div *ngIf="f['id_category'].errors['required']">
+        						<span class="text-danger">
+        							La Cateoría del producto es obligatoria.
+        						</span>
+        					</div>
+        				</div>
+        			</div>
+        			<div>
+        				<br>
+        				<p class="text-right"><span class="text-danger">*</span> Campos obligatorios.</p>
+        				<button type="submit" class="btn btn-success btn-block" [disabled]="isDisabled">Registrar</button>
+        			</div>
+        		</form>
+      		</div>
+
+      		<div class="modal-footer">
+        		<button (click)="closeModal()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+      		</div>
+
+    	</div>
+  	</div>
+</div>
