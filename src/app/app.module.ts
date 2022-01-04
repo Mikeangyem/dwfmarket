@@ -12,6 +12,8 @@ import { CustomerModule } from './modules/customer/customer.module';
 import { HomeModule } from './modules/home/home.module';
 import { ProductModule } from './modules/product/product.module';
 
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -24,7 +26,8 @@ import { ProductModule } from './modules/product/product.module';
     ExchangeRateModule,
     CustomerModule,
     HomeModule,
-    ProductModule
+    ProductModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]
