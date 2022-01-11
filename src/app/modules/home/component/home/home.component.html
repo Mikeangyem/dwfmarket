@@ -1,6 +1,22 @@
 <!-- Section-->
 <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
+
+    <div class="container-fluid px-4 px-lg-5 mt-5">
+
+        <div ngbDropdown class="dropdown">
+            <button ngbDropdownToggle class="btn btn-outline-primario mt-auto" type="button" id="dpdrown" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ category_button }}
+            </button>
+            <ul ngbDropdownMenu aria-labelledby="dpdrown">
+                <li><a ngbDropdownItem (click)="getRandProducts()">Selección</a></li>
+                <li *ngFor="let category of categories">
+                    <a ngbDropdownItem (click)="getProductsCategory(category.id_category)">{{ category.category }}</a>
+                </li>
+            </ul>
+        </div>
+        
+        <br>
+
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
             <div *ngFor="let product of products" class="col mb-5">

@@ -9,3 +9,14 @@
     background-color: transparent;
     border-color: purple;
 }
+
+.btn-outline-primario {
+  color: #fff;
+  background-color: #0d6efd;
+  border-color: #0d6efd;
+}
+.btn-outline-primario:hover {
+  color: #0d6efd;
+  background-color: transparent;
+  border-color: #0d6efd;
+}
