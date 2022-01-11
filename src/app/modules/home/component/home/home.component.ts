@@ -17,6 +17,10 @@ export class HomeComponent implements OnInit {
   products: Product[] = [];
   categories: Category[] = [];
   images: ProductImage[] = [];
+
+  category: Category = new Category();
+
+  category_button = "";
   
   constructor(
     private product_service: ProductService,
@@ -30,24 +34,16 @@ export class HomeComponent implements OnInit {
   }
 
   getRandProducts() {
-    this.product_service.getProducts().subscribe(
+    this.product_service.getProductsRandom().subscribe(
       res => {
-        for (let i = res.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i+1));
-          const temp = res[i];
-          res[i] = res[j];
-          res[j] = temp
-        }
-
-        if (res.length > 3) {
-          this.products = res.slice(0, 3);
-        } else {
-          this.products = res;
-        }
+        this.products = res;
 
         for (let i = 0; i < this.products.length; i++) {
           this.getProductImage(this.products[i].id_product);
         }
+
+        this.category_button = "Selección";
+        this.getCategories();
       },
       err => console.log(err)
       )
@@ -57,7 +53,7 @@ export class HomeComponent implements OnInit {
     this.product_image_service.getProductImages(id_product).subscribe(
       res => {
         this.images.push(res[0]);
-        console.log(this.images);
+        //console.log(this.images);
       },
       err => console.log(err)
     )
@@ -75,6 +71,41 @@ export class HomeComponent implements OnInit {
 
   productDetail(gtin: string){
     this.router.navigate(['product-detail/'+gtin]);
+  }
+
+  getCategories() {
+    this.category_service.getCategories().subscribe(
+      res => {
+        this.categories = res;
+      },
+      err => console.log(err)
+      )
+  }
+
+  getCategory(id_category: number) {
+    this.category_service.getCategory(id_category).subscribe(
+      res => {
+        this.category = res;
+        this.category_button = this.category.category;
+      },
+      err => console.log(err)
+    )
+  }
+
+  getProductsCategory(id_category: number) {
+    this.category = new Category();
+    this.product_service.getProductsCategory(id_category).subscribe(
+      res => {
+        this.products = res;
+
+        for (let i = 0; i < this.products.length; i++) {
+          this.getProductImage(this.products[i].id_product);
+        }
+
+        this.getCategory(id_category);
+      },
+      err => console.log(err)
+      )
   }
 
 }

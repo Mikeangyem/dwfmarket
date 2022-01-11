@@ -39,6 +39,14 @@ export class ProductService {
   updateProductCategory(id_product: number, category: Category){
     return this.http.put(this.apiURI + this.resource + `/${id_product}` + "/category", category);
   }
+
+  getProductsRandom() {
+    return this.http.get<Product[]>(this.apiURI + this.resource + "/random");
+  }
+
+  getProductsCategory(id_category: number) {
+    return this.http.get<Product[]>(this.apiURI + this.resource + "/category" + `/${id_category}`);
+  }
 }
 
 
