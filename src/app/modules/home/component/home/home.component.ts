@@ -7,6 +7,8 @@ import { ProductImageService } from '../../../product/_service/product-image.ser
 import { CategoryService } from '../../../product/_service/category.service';
 import { Router } from '@angular/router';
 
+declare var $: any;
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,6 +20,8 @@ export class HomeComponent implements OnInit {
   categories: Category[] = [];
   images: ProductImage[] = [];
 
+  product: Product = new Product();
+  product_images: ProductImage[] = [];
   category: Category = new Category();
 
   category_button = "";
@@ -93,7 +97,6 @@ export class HomeComponent implements OnInit {
   }
 
   getProductsCategory(id_category: number) {
-    this.category = new Category();
     this.product_service.getProductsCategory(id_category).subscribe(
       res => {
         this.products = res;
@@ -106,6 +109,43 @@ export class HomeComponent implements OnInit {
       },
       err => console.log(err)
       )
+  }
+
+  getProduct(gtin: string) {
+    this.product_service.getProduct(gtin).subscribe(
+      res => {
+        this.product = res;
+        this.getProductImages(this.product.id_product);
+        console.log(this.product_images);
+      },
+      err => console.log(err)
+      )
+  }
+
+  getProductImages(id_product: number) {
+    this.product_image_service.getProductImages(id_product).subscribe(
+      res => {
+        this.product_images = res;
+      },
+      err => console.log(err)
+      )
+  }
+
+  getProductDetail(gtin: string) {
+    this.getProduct(gtin);
+    $("#product_modal").modal("show");
+  }
+
+  closeModal() {
+    $("#product_modal").modal("hide");
+  }
+
+  previousSlide() {
+    $("#product_carousel").carousel("prev");
+  }
+
+  nextSlide() {
+    $("#product_carousel").carousel("next");
   }
 
 }
