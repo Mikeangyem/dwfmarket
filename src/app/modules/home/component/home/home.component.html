@@ -29,15 +29,65 @@
                             <!-- Product name-->
                             <h5 class="fw-bolder">{{ product.product }}</h5>
                             <!-- Product price-->
-                            {{ product.price }}
+                            ${{ product.price }}
                         </div>
                     </div>
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                        <div class="text-center"><a (click)="productDetail(product.gtin)" class="btn btn-outline-ejercicio5 mt-auto">Ver Detalle</a></div>
+                        <div class="text-center"><a (click)="getProductDetail(product.gtin)" class="btn btn-outline-ejercicio5 mt-auto">Ver Detalle</a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<div class="modal" tabindex="-1" id="product_modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">{{ product.product }}</h5>
+                <button (click)="closeModal()" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body text-center">
+
+                <!--<ngb-carousel>
+                    <ng-template ngbSlide *ngFor="let img of product_images">
+                        <div class="picsum-img-wrapper">
+                            <img src="assets/{{img.image}}">
+                        </div>
+                    </ng-template>
+                </ngb-carousel>-->
+
+                <div id="product_carousel" class="carousel slide" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <div *ngFor="let img of product_images; let isFirst = first" [class.active]="isFirst" class="carousel-item">
+                            <img class="d-block w-100" src="assets/{{img.image}}">
+                        </div>
+                    </div>
+
+                    <button (click)="previousSlide()" class="carousel-control-prev" type="button" data-bs-target="#product_carousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+
+                    <button (click)="nextSlide()" class="carousel-control-next" type="button" data-bs-target="#product_carousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+                <p>{{ product.gtin }}</p>
+                <p>${{ product.price }}</p>
+                <p>{{ product.description }}</p>
+                <p>{{ product.stock }} piezas disponibles</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-ejercicio5 mt-auto">Agregar al Carrito</button>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -20,3 +20,18 @@
   background-color: transparent;
   border-color: #0d6efd;
 }
+
+ngb-carousel {
+    max-width: 700px;
+    margin: 50px auto;
+}
+
+ngb-carousel img {
+    width: 100%;
+    outline: none;
+}
+
+ngb-carousel {
+    width: inherit;
+    height: inherit;
+}
